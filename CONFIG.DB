@@ -1,0 +1,51 @@
+*
+* QLETS 8 Configuration File
+*	  Feb 1998
+*
+DESIGN               = OFF
+DEVELOPMENT          = OFF
+DISPLAY              = EGA25
+ESCAPE               = OFF
+EXCLUSIVE            = OFF
+F10                  = ";"
+F2                   = ";"
+F3                   = ";"
+F4                   = ";"
+F5                   = ";"
+F6                   = ";"
+F7                   = ";"
+F8                   = ";"
+F9                   = ";"
+SHIFT-F1 = "Å"
+CTRL-F1  = "ö"
+SHIFT-F2 = "ã"
+CTRL-F2  = "Ç"
+SHIFT-F3 = "Ñ"
+CTRL-F3  = "é"
+SHIFT-F4 = "î"
+CTRL-F4  = "ô"
+SHIFT-F5 = "â"
+CTRL-F5  = "à"
+SHIFT-F6 = "ä"
+CTRL-F6  = "á"
+SHIFT-F7 = "ò"
+CTRL-F7  = "£"
+SHIFT-F8 = "Ü"
+CTRL-F8  = ";"
+SHIFT-F9 = "§"
+CTRL-F9  = ";"
+HELP                 = OFF
+INSTRUCT             = OFF
+NEAR                 = ON
+ODOMETER             = 1
+PROMPT               = To exit type QUIT:
+SAFETY               = OFF
+SCOREBOARD           = OFF
+SPACE                = OFF
+SQLDATABASE          = SAMPLES
+SQLHOME              = H:\DBASE\SQLHOME
+STATUS               = OFF
+TALK                 = OFF
+COMMAND              = DO C:\QL8\QLETS
+BELL                 = OFF
+

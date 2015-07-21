@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE></TITLE>
+   <META NAME="Author" CONTENT="">
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY>
+
+<P><A NAME="top"></A><IMG SRC="q8small.gif" ALT="Qlets 8: Software for Local Currencies" HEIGHT=144 WIDTH=287>&nbsp;&nbsp;<FONT SIZE=+3>Trouble
+Shooting&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<HR WIDTH="100%"></FONT>If Qlets doesn't start up when you attempt to run
+QLETS.EXE, you may have to tweak some settings. The most common problem
+is a memory conflict on older machines running Windows 3.1 or DOS. The
+following section is reprinted from the User Manual (QMANUAL.DOC), that
+comes bundled in the download zipfile. </P>
+
+<P><A HREF="#about_vmm">About the Virtual Memory Manager<BR CLEAR=BOTH>
+</A><A HREF="#dis_smart">Disabling the SMARTDRIVE Disk Cache<BR CLEAR=BOTH>
+</A><A HREF="#dis_vmm">Disabling the Qlets Virtual Memory Manager</A><BR CLEAR=BOTH>
+</P>
+
+<P>The single persistant problem with QLETS revolves around corruption
+of index files, extension .MDX or .NDX. Theses files appear in virgin form
+in the download copy after it's unpacked (by clicking on the download file,
+which is self-extracting).<BR CLEAR=BOTH>
+<BR CLEAR=BOTH>
+Corrupted index files can cause the appearance of incorrect ads, trades,
+or memo/list information attributed to accounts, and is the first indication
+of a problem. First run Reindex under Special Tools and look for an error
+message. Almost always, such files are corrupted due to an improper shutdown,
+a hardware conflict, or another circumstance that requires rebooting the
+computer while QLETS is still running. This event can cause imcomplete
+records that have a variety of random characters, and may be missing key
+information needed by the index files, depending on where the program code
+was waiting and which database files may have been open at that point.</P>
+
+<P>It is possible to repair all corrupted index files by using the following
+instructions:</P>
+
+<P>1) move all of your old QLETS files into a directory called C:\QL17
+(you may have to create it). This directory is read first when searching
+for older QLETS copies using the Convert Data option (below), to extract
+their current data into clean files.<BR CLEAR=BOTH>
+2) download the most current <A HREF="index.html">Full Version</A> of QLETS
+from our website and save it in C:\QL8<BR CLEAR=BOTH>
+3) click on the download file (Q8FULL.EXE), to unpack it into C:\QL8<BR CLEAR=BOTH>
+4) run the newly downloaded version at C:\QL8\QLETS.EXE<BR CLEAR=BOTH>
+5) Use the Convert Data option under Special Tools (if you have problems
+with the password, the default is a blank line so hit Enter). Then choose
+QLETS - Earlier Versions by hitting Q.<BR CLEAR=BOTH>
+6) Your current data is then extracted from C:\QL17 into clean files properly
+indexed.</P>
+
+<P>In case you still experience difficulty, simply email me the zipped
+versions of the data files I request, and I'll have a look at them manually
+and repair any bad records, then email themback. Currently I'm at sparky@pipcom.com.<BR CLEAR=BOTH>
+<BR CLEAR=BOTH>
+<BR CLEAR=BOTH>
+<A NAME="about_vmm"></A><A HREF="#top"><IMG SRC="3dleft.gif" BORDER=0 HEIGHT=26 WIDTH=26></A><B><FONT COLOR="#808000"><FONT SIZE=+2>&nbsp;About
+the Virtual Memory Manager 
+<HR WIDTH="100%"></FONT></FONT></B>A virtual memory manager (VMM) is included
+with QLETS to help it to run concurrently with other software in Windows
+3.1. By using the VMM, memory requirements for Qlets are much reduced.
+The VMM is currently set for a typical 4 RAM machine (you can edit the
+settings by opening QLETS.VMM in a text editor), but can be set for as
+little as 2 RAM. It may conflict with disk-caching software like SMARTDRIVE,
+however, a common disk-cache that may well be running on your system. (SMARTDRIVE.EXE
+is shipped with Microsoft Windows). If you are unable to start up QLETS,
+it's likely due to this memory conflict. There are two ways to fix it,
+should this happen to you. You can: </P>
+
+<P>1) disable SMARTDRIVE (or whatever disk-caching program is running on
+your system), or <BR clear=both>
+2) disable the VMM supplied with QLETS (by erasing the QLETS.VMC) </P>
+
+<P><BR CLEAR=BOTH>
+<A NAME="dis_smart"></A><A HREF="#top"><IMG SRC="3dleft.gif" BORDER=0 HEIGHT=26 WIDTH=26></A><FONT COLOR="#808000"><FONT SIZE=+2>&nbsp;Disabling
+the SMARTDRIVE Disk Cache 
+<HR WIDTH="100%"></FONT></FONT>Disabling SMARTDRIVE involves editing your
+AUTOEXEC.BAT file, to convert the line that loads it into a comment. For
+example, my AUTOEXEC file contained the line: </P>
+
+<P>C:\WINDOWS\SMARTDRV.EXE 1024 256 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>which
+was changed to: <BR clear=both>
+</B>REM C:\WINDOWS\SMARTDRV.EXE 1024 256 </P>
+
+<P>It's useful, but not essential, to edit the QLETS.VMC file, (you can
+use any text editor, like Notepad, for example) which contains explanations
+of the settings. If the QLETS.VMC file is present - ie. not erased - then
+the VMM will be activated whenever Qlets is started. The MAXMEM and MINMEM
+settings in the VMM can be altered to suit your RAM. For information on
+SMARTDRIVE, type &quot;help&quot; from the c:\ and look at the entry describing
+it. The downside of disabling SMARTDRIVE (and using the Qlets VMM instead),
+is slightly slower computer operation, especially when groups of files
+are copied or moved. The upside is you'll be able to use Alt-Tab in Windows
+to switch between other software and Qlets while keeping them all running
+at once. </P>
+
+<P><BR CLEAR=BOTH>
+<A NAME="dis_vmm"></A><A HREF="#top"><IMG SRC="3dleft.gif" BORDER=0 HEIGHT=26 WIDTH=26></A><FONT SIZE=+2><B>&nbsp;</B><FONT COLOR="#808000">Disabling
+the Qlets Virtual Memory Manager 
+<HR WIDTH="100%"></FONT></FONT>The other option is to keep SMARTDRIVE in
+place, and remove the file QLETS.VMC from the C:\QL8 directory instead.
+This will disable the Qlets virtual memory manager. You must then add the
+following line to your CONFIG.SYS file:</P>
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>SET DOS16M=:2M</B></P>
+
+<P>This is a DOS environmental variable that sets how much extended memory
+is available for DOS-based programs. For users with little RAM, disabling
+the VMM this way means that Qlets must run alone from the DOS prompt. <BR CLEAR=BOTH>
+
+<HR WIDTH="100%"><A HREF="index.html"><IMG SRC="3dleft.gif" BORDER=0 HEIGHT=26 WIDTH=26 ALIGN=CENTER></A>&nbsp;<A HREF="index.html"><IMG SRC="h.gif" BORDER=0 HEIGHT=28 WIDTH=27 ALIGN=CENTER></A>&nbsp;&nbsp;&nbsp;&nbsp;June
+98</P>
+
+</BODY>
+</HTML>

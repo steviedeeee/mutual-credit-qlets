@@ -1,0 +1,230 @@
+* Program............: Qlabels.LBG
+* Date...............: 9-27-96
+* Version............: dBASE IV, Label 1.1
+*
+* Label Specifics:
+*   Wide - 35
+*   Tall - 5
+*   Indentation - 0
+*   Number across - 1
+*   Space between - 0
+*   Lines between - 1
+*   Blankable lines - 4
+*   Print formatted - 5
+*
+PARAMETER ll_sample
+*-- Set printer variables for this procedure only
+PRIVATE _peject, _wrap
+
+*-- Test for End of file
+IF EOF()
+   RETURN
+ENDIF
+
+IF SET("TALK")="ON"
+   SET TALK OFF
+   gc_talk="ON"
+ELSE
+   gc_talk="OFF"
+ENDIF
+gc_space = SET("SPACE")
+SET SPACE OFF
+gc_time=TIME()      && system time for predefined field
+gd_date=DATE()      && system date  "    "    "     "
+gl_fandl=.F.        && first and last record flag
+gl_prntflg=.T.      && Continue printing flag
+gn_column=1
+gn_element=0
+gn_line=1
+gn_memowid=SET("MEMOWIDTH")
+SET MEMOWIDTH TO 254
+gn_page=_pageno     && capture page number for multiple copies
+_plineno=0
+_wrap = .F.
+
+*-- Setup Environment
+ON ESCAPE DO Prnabort
+
+DECLARE gn_line2[1]
+
+PRINTJOB
+
+*-- Initialize calculated variables.
+longname=""
+
+*-- set page number for multiple copies
+_pageno=gn_page
+
+IF ll_sample
+   DO Sample
+   IF LASTKEY() = 27
+      RETURN
+   ENDIF
+ENDIF
+
+DO WHILE FOUND() .AND. .NOT. EOF() .AND. gl_prntflg
+   longname=LTRIM(RTRIM(fname)+" "+RTRIM(lname))
+
+   gn_line=0
+   *-- Check for blank lines
+   DO Chk4null WITH 0, 5, 5
+
+   DO WHILE gn_line < 6
+      ?
+      gn_line=gn_line+1
+   ENDDO
+   CONTINUE
+ENDDO
+
+IF .NOT. gl_prntflg
+   SET MEMOWIDTH TO gn_memowid
+   SET SPACE &gc_space.
+   SET TALK &gc_talk.
+   ON ESCAPE
+   RETURN
+ENDIF
+
+
+ENDPRINTJOB
+
+
+SET MEMOWIDTH TO gn_memowid
+SET SPACE &gc_space.
+SET TALK &gc_talk.
+ON ESCAPE
+RETURN
+* EOP: Qlabels.LBG
+
+PROCEDURE Prnabort
+gl_prntflg=.F.
+RETURN
+* EOP: Prnabort
+
+FUNCTION ___01
+lc_ret=.F.
+*-- Test for blank line
+IF LEN(TRIM( longname )) > 0
+   ll_output=.T.
+   _pcolno = 0
+   ?? longname PICTURE "@T XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" AT 0 
+ELSE
+   lc_ret=.T.
+ENDIF
+RETURN lc_ret
+
+FUNCTION ___11
+lc_ret=.F.
+*-- Test for blank line
+IF LEN(TRIM( Address )) > 0
+   ll_output=.T.
+   _pcolno = 0
+   ?? Address PICTURE "@T" AT 0 
+ELSE
+   lc_ret=.T.
+ENDIF
+RETURN lc_ret
+
+FUNCTION ___21
+lc_ret=.F.
+*-- Test for blank line
+IF LEN(TRIM( Add2ress )) > 0
+   ll_output=.T.
+   _pcolno = 0
+   ?? Add2ress PICTURE "@T" AT 0 
+ELSE
+   lc_ret=.T.
+ENDIF
+RETURN lc_ret
+
+FUNCTION ___31
+lc_ret=.F.
+*-- Test for blank line
+IF LEN(TRIM( City )) > 0
+   ll_output=.T.
+   _pcolno = 0
+   ?? City PICTURE "@T" AT 0 
+ELSE
+   lc_ret=.T.
+ENDIF
+RETURN lc_ret
+
+FUNCTION ___41
+lc_ret=.F.
+ll_output=.T.
+_pcolno = 0
+?? Pcode PICTURE "@T" AT 0 ;
+,"ID" AT 16 ;
+,Id PICTURE "@T 999999" AT 19 ;
+,Distrib PICTURE "@T" AT 29 
+RETURN lc_ret
+
+
+PROCEDURE Chk4null
+*-- Parameters:
+*
+*-- 1) line number on the design surface
+*-- 2) maximum number of printable lines
+*-- 3) parameter 2 times number of labels across
+*
+PARAMETERS ln_line, ln_lastrow, ln_element
+gn_element=0
+gn_line2[1]=ln_line
+lc_temp=SPACE(7)
+ll_output=.F.
+DO WHILE gn_element < ln_element
+   gn_column=1
+   ll_output=.F.
+   DO WHILE gn_column <= 1
+      IF gn_line2[gn_column] < ln_lastrow
+         lc_temp=LTRIM(STR(gn_line2[gn_column]))+LTRIM(STR(gn_column))
+         DO WHILE ___&lc_temp.()
+            gn_element=gn_element+1
+            gn_line2[gn_column]=gn_line2[gn_column]+1
+            lc_temp=LTRIM(STR(gn_line2[gn_column]))+LTRIM(STR(gn_column))
+         ENDDO
+         gn_element=gn_element+1
+         gn_line2[gn_column]=gn_line2[gn_column]+1
+      ENDIF
+      gn_column=gn_column+1
+   ENDDO
+   IF ll_output
+     ?
+     gn_line=gn_line+1
+   ENDIF
+ENDDO
+RETURN
+* EOP: Chk4null
+
+PROCEDURE Sample
+PRIVATE x,y,choice
+DEFINE WINDOW w4sample FROM 15,20 TO 17,60 DOUBLE
+choice="Y"
+x=0
+DO WHILE choice = "Y"
+   y=0
+   DO WHILE y < 5
+      x=0
+      DO WHILE x < 1
+         ?? REPLICATE("X",35)
+         x=x+1
+      ENDDO
+      ?
+      y=y+1
+   ENDDO
+   x=0
+   DO WHILE x < 1
+      ?
+      x=x+1
+   ENDDO
+   ACTIVATE WINDOW w4sample
+   @ 0,3 SAY "Do you want more samples? (Y/N)";
+   GET choice PICTURE "!" VALID choice $ "NY"
+   READ
+   DEACTIVATE WINDOW w4sample
+   IF LASTKEY() = 27
+      EXIT
+   ENDIF
+ENDDO
+RELEASE WINDOW w4sample
+RETURN
+* EOP: Sample

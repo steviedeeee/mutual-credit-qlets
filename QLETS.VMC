@@ -1,0 +1,60 @@
+!***************************************************************************
+!                                                                          
+!     NOTE:  BLANK LINES WILL TERMINATE PROCESSING AND SHOULD NOT BE       
+!            INCLUDED IN THIS FILE.  COMMENT LINES MUST BEGIN WITH !.      
+!            LIMIT THE LENGTH OF LINES IN THIS FILE TO 78 CHARACTERS.      
+!                                                                          
+!
+!   The lines immediately following are included for reference --- the real 
+!   settings occur at the end of this file,  although the MAXMEM and MINMEM 
+!   settings can be changed, according to the amount of extended memory you
+!   have available.  To view available memory, type MEM from the C:\ prompt
+!   in DOS. You can also use MEMMAKER (included in DOS 6), to optimize your
+!   memory. Remember that disk-caching programs like  SMARTDRIVE  may cause
+!   a conflict.  For Windows 3.1 users, check your AUTOEXEC.BAT file to see
+!   if  SMARTDRIVE  is loaded when you boot your computer.  You can either:
+!   disable  SMARTDRIVE  (type REM in front of the line that calls it, then
+!   reboot), or remove this file from C:\QL8 (leaving SMARTDRIVE in place) 
+!   and add the line SET DOS16M=:2M to your CONFIG.SYS file.
+!
+!
+!maxmem = 8192       default: all available extended memory
+!minmem = 1024       default: needs a minimum of 1MB of extended memory
+!maxsel = 0xFFF8     default: All selectors are available
+!virtualsize = 8192  default: greater of 5120 or maxmem
+!blocksize = 1024    default: use 1K blocks
+!cushion = 128       default: The swap file 'cushion' is 128K
+!ems = 0             default: No EMS (Expanded) memory for swapping
+!swapname=C:\QL8\QLETS.SWP  default: path from which QLETS is loaded
+!DELETESWAP          default: delete the swap file
+!NODELETESWAP        Use nodeleteswap to keep and reuse swapfile
+!TRYRO               default: swap read/only segments 
+!NOTRYRO             Use notryro to swap modified segments
+!FAVORRO             default: favor read/only segments when swapping
+!NOFAVORRO           Use nofavorro to ignore modified status of segments 
+!                    when swapping
+!RETRYIO=4           default: retry 4 times if an I/O error occurs
+!ENVLOW              default: use extended memory for environment 
+!                             programs spawned in protected mode.
+!RESERVELOW=100      default: reserve 100K of dos memory
+!
+!
+! *************************************************************************
+!
+!     Here are the real QLETS settings, for a typical 4 RAM machine:
+!
+!
+maxmem = 3072
+minmem = 1024
+maxsel = 0xFFF8
+virtualsize = 3072
+blocksize = 1024
+cushion = 128
+ems = 0
+swapname=C:\QL8\QLETS.SWP
+DELETESWAP
+TRYRO
+FAVORRO
+RETRYIO=4
+ENVLOW
+RESERVELOW=100
